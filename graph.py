@@ -100,19 +100,19 @@ def should_route(state: State) -> str:
 
 def create_graph():
     """Creates and compiles the LangGraph workflow."""
-    graph_builder = StateGraph(State)
+    workflow = StateGraph(State)
     
     # Add nodes
-    graph_builder.add_node("router", router_node)
-    graph_builder.add_node("vector_db", vector_db_node)
-    graph_builder.add_node("wikipedia", wikipedia_node)
-    graph_builder.add_node("response_generator", response_generator)
+    workflow.add_node("router", router_node)
+    workflow.add_node("vector_db", vector_db_node)
+    workflow.add_node("wikipedia", wikipedia_node)
+    workflow.add_node("response_generator", response_generator)
     
     # Set entry point
-    graph_builder.set_entry_point("router")
+    workflow.set_entry_point("router")
     
     # Add conditional edge from router
-    graph_builder.add_conditional_edges(
+    workflow.add_conditional_edges(
         "router",
         should_route,
         {
@@ -122,13 +122,13 @@ def create_graph():
     )
     
     # Add edges from data sources to response generator
-    graph_builder.add_edge("vector_db", "response_generator")
-    graph_builder.add_edge("wikipedia", "response_generator")
+    workflow.add_edge("vector_db", "response_generator")
+    workflow.add_edge("wikipedia", "response_generator")
     
     # Add edge from response generator to end
-    graph_builder.add_edge("response_generator", END)
+    workflow.add_edge("response_generator", END)
     
-    return graph_builder.compile()
+    return workflow.compile()
 
 
 if __name__ == "__main__":
