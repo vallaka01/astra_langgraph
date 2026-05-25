@@ -18,7 +18,8 @@ def main():
         openai_api_key=os.getenv("OPENAI_API_KEY")
     )
     
-    text_splitter = RecursiveCharacterTextSplitter(
+    text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+        encoding_name="cl100k_base",
         chunk_size=1000,
         chunk_overlap=200
     )
