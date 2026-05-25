@@ -137,6 +137,21 @@ if __name__ == "__main__":
     
     app = create_graph()
     
+    # Print the graph structure
+    print("=== Graph Structure ===\n")
+    graph = app.get_graph()
+    print(graph.print_ascii())
+    
+    print("\n=== Nodes ===")
+    for node in graph.nodes:
+        print(f"  - {node}")
+    
+    print("\n=== Edges ===")
+    for edge in graph.edges:
+        print(f"  - {edge}")
+    
+    print("\n" + "=" * 50)
+    
     # Test with a query
     test_query = "What is LangChain?"
     initial_state = {
@@ -145,7 +160,7 @@ if __name__ == "__main__":
         "context": ""
     }
     
-    print(f"Query: {test_query}\n")
+    print(f"\nQuery: {test_query}\n")
     print("=== Streaming Events ===\n")
     
     for event in app.stream(initial_state):
